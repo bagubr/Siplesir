@@ -76,7 +76,7 @@
                     <div class="form-group row">
                         <label for="alamat_imb" class="col-md-4 col-form-label text-md-right">{{ __('Alamat di IMB') }}</label>
                         <div class="col-md-12">
-                            <input id="alamat_imb" type="text" class="form-control @error('alamat_imb') is-invalid @enderror" value="{{ old('alamat_imb', $permohonan->alamat_imb) }}" name="alamat_imb" disabled autocomplete="alamat_imb">
+                            <textarea id="alamat_imb" style="height: 100px;" class="form-control @error('alamat_imb') is-invalid @enderror" name="alamat_imb" disabled autocomplete="alamat_imb">{{ old('alamat_imb', $permohonan->alamat_imb) }}</textarea>
                             @error('alamat_imb')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
