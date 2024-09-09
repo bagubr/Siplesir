@@ -57,7 +57,7 @@
                                 <a class="btn btn-info text-md-start" href="{{ route('register') }}">
                                     {{ __('Belum Punya Akun? Daftar') }}
                                 </a>
-                                <a class="btn btn-danger text-md-start" href="#">
+                                <a class="btn btn-danger text-md-start" href="{{route('google-auth')}}">
                                 <i class="text-white fas fa-google-plus"></i>{{ __('Google') }}
                                 </a>
                             </div>

@@ -19,7 +19,7 @@ class PermohonanController extends Controller
     {
         $permohonan = Permohonan::when((Auth::user()->role == 'user'), function ($query) use ($request) {
             $query->where('user_id', Auth::user()->id);
-        })->whereIn('status', ['Ceking', '⁠Verifikasi'])->get();
+        })->whereIn('status', ['Ceking', 'Verifikasi'])->get();
         return view('permohonan.index', compact('permohonan'));
     }
 

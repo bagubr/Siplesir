@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PermohonanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -9,7 +10,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+
+Route::get('authorized/google/callback', [RegisterController::class, 'handleGoogleCallback'])->name('google-auth-callback');
+Route::get('authorized/google', [RegisterController::class, 'redirectToGoogle'])->name('google-auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
@@ -68,5 +69,37 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $user = Socialite::driver('google')->stateless()->user();
+            $finduser = User::where('email', $user->email)->first();
+
+            if($finduser){
+                auth()->login($finduser, true);
+                return redirect()->route('home')->with('success', 'Login Berhasil');
+            }else{
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'google_id'=> $user->id,
+                    'password' => Hash::make($user->id)
+                ]);
+                $newUser->sendEmailVerificationNotification();
+                auth()->login($newUser, true);
+                return redirect()->route('home')->with('success', 'Login Berhasil');
+            }
+
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi Kesalahan Coba Ulangi Kembali');
+        }
     }
 }
