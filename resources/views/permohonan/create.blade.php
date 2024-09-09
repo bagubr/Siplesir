@@ -65,6 +65,39 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="status_tanah" class="col-md-4 col-form-label text-md-right">{{ __('Status Tanah') }}</label>
+                            <div class="col-md-12">
+                                <select name="status_tanah" id="status_tanah" class="text-dark form-control" required>
+                                    <option value="">--- Pilih Status Tanah ---</option>
+                                    <option value="HAK MILIK">HAK MILIK</option>
+                                    <option value="HAK GUNA BANGUNAN">HAK GUNA BANGUNAN</option>
+                                    <option value="HAK GUNA USAHA">HAK GUNA USAHA</option>
+                                    <option value="HAK PAKAI">HAK PAKAI</option>
+                                    <option value="HAK PENGELOLAAN">HAK PENGELOLAAN</option>
+                                    <option value="HAK SATUAN RUMAH SUSUN">HAK SATUAN RUMAH SUSUN</option>
+                                    <option value="TANAH YASAN (LETTER C/D)">TANAH YASAN (LETTER C/D)</option>
+                                    <option value="TANAH NEGARA">TANAH NEGARA</option>
+                                    <option value="TANAH WAKAF">TANAH WAKAF</option>
+                                </select>
+                                @error('status_tanah')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="nomor_sertifikat" class="col-md-4 col-form-label text-md-right">{{ __('Nomor Sertifikat') }}</label>
+                                <input id="nomor_sertifikat" name="nomor_sertifikat" type="text" class="form-control" placeholder="Nomor Sertifikat" required />
+                                @error('nomor_sertifikat')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="nama_imb" class="col-md-4 col-form-label text-md-right">{{ __('Nama di IMB') }}</label>
                             <div class="col-md-12">
                                 <input id="nama_imb" type="text" class="form-control @error('nama_imb') is-invalid @enderror" name="nama_imb" required autocomplete="nama_imb">
@@ -78,7 +111,7 @@
                         <div class="form-group row">
                             <label for="alamat_imb" class="col-md-4 col-form-label text-md-right">{{ __('Alamat di IMB') }}</label>
                             <div class="col-md-12">
-                                <textarea id="alamat_imb" class="form-control @error('alamat_imb') is-invalid @enderror"  style="height: 100px;" name="alamat_imb" required autocomplete="alamat_imb"></textarea>
+                                <textarea id="alamat_imb" class="form-control @error('alamat_imb') is-invalid @enderror" style="height: 100px;" name="alamat_imb" required autocomplete="alamat_imb"></textarea>
                                 @error('alamat_imb')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -109,9 +142,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="sk_imb" class="col-md-4 col-form-label text-md-right">{{ __('SK IMB') }} (Wajib)</label>
+                            <label for="sk_imb" class="col-md-4 col-form-label text-md-right">{{ __('SK IMB') }} (Optional)</label>
                             <div class="col-md-12">
-                                <input type="file" id="sk_imb" class="form-control @error('sk_imb') is-invalid @enderror" name="sk_imb" required autocomplete="sk_imb">
+                                <input type="file" id="sk_imb" class="form-control @error('sk_imb') is-invalid @enderror" name="sk_imb" autocomplete="sk_imb">
                                 @error('sk_imb')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -178,6 +211,27 @@
 @push('scripts')
 <!-- JS Libraies -->
 <script>
+    $("#status_tanah").change(function() {
+        var val = $(this).val();
+        console.log(val);
+        if (val == 'HAK MILIK') {
+            $('#nomor_sertifikat').val('HM.');
+        } else if (val == 'HAK GUNA BANGUNAN') {
+            $('#nomor_sertifikat').val('HGB.');
+        } else if (val == 'HAK GUNA USAHA') {
+            $('#nomor_sertifikat').val('HGU.');
+        } else if (val == 'HAK PAKAI') {
+            $('#nomor_sertifikat').val('HP.');
+        } else if (val == 'HAK PENGELOLAAN') {
+            $('#nomor_sertifikat').val('HPL.');
+        } else if (val == 'HAK SATUAN RUMAH SUSUN') {
+            $('#nomor_sertifikat').val('HSRS.');
+        } else if (val == 'TANAH NEGARA') {
+            $('#nomor_sertifikat').val('TN.');
+        } else {
+            $('#nomor_sertifikat').val('No.');
+        }
+    });
     $("#telp_pemohon, #tahun").on('keyup change', function() {
         val = $(this).val() || 0;
         if (isNaN(val)) {

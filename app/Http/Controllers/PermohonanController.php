@@ -53,17 +53,21 @@ class PermohonanController extends Controller
             'alamat_imb' => 'required|string',
             'tahun' => 'required|string',
             'tujuan' => 'required|string',
-            'sk_imb' => 'required|file|mimes:pdf|max:2048',
+            'sk_imb' => 'sometimes|file|mimes:pdf|max:2048',
             'sertifikat' => 'required|file|mimes:pdf|max:2048',
             'ktp' => 'required|file|mimes:pdf|max:2048',
             'foto_rumah' => 'required|file|mimes:pdf|max:2048',
             'surat_kuasa' => 'sometimes|file|mimes:pdf|max:2048',
             'surat_kehilangan' => 'sometimes|file|mimes:pdf|max:2048',
+            'nomor_sertifikat' => 'required|string',
+            'status_tanah' => 'required|string',
         ]);
         $data['user_id'] = Auth::user()->id;
         try {
             DB::beginTransaction();
-            $data['sk_imb'] = $request->sk_imb->store('sk_imb');
+            if ($request->file('sk_imb')) {
+                $data['sk_imb'] = $request->sk_imb->store('sk_imb');
+            }
             $data['sertifikat'] = $request->sertifikat->store('sertifikat');
             $data['ktp'] = $request->ktp->store('ktp');
             $data['foto_rumah'] = $request->foto_rumah->store('foto_rumah');
@@ -120,6 +124,8 @@ class PermohonanController extends Controller
             'foto_rumah' => 'sometimes|file|mimes:pdf|max:2048',
             'surat_kuasa' => 'sometimes|file|mimes:pdf|max:2048',
             'surat_kehilangan' => 'sometimes|file|mimes:pdf|max:2048',
+            'nomor_sertifikat' => 'required|string',
+            'status_tanah' => 'required|string',
         ]);
         try {
             DB::beginTransaction();
@@ -175,7 +181,7 @@ class PermohonanController extends Controller
         $data = $this->validate($request, [
             'status' => 'required|string',
         ]);
-        try{
+        try {
             $permohonan->update($data);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -193,32 +199,32 @@ class PermohonanController extends Controller
      */
     public function destroy(Permohonan $permohonan): RedirectResponse
     {
-        if($permohonan->sk_imb){
+        if ($permohonan->sk_imb) {
             if (Storage::exists($permohonan->sk_imb)) {
                 Storage::delete($permohonan->sk_imb);
             }
         }
-        if($permohonan->sertifikat){
+        if ($permohonan->sertifikat) {
             if (Storage::exists($permohonan->sertifikat)) {
                 Storage::delete($permohonan->sertifikat);
             }
         }
-        if($permohonan->ktp){
+        if ($permohonan->ktp) {
             if (Storage::exists($permohonan->ktp)) {
                 Storage::delete($permohonan->ktp);
             }
         }
-        if($permohonan->foto_rumah){
+        if ($permohonan->foto_rumah) {
             if (Storage::exists($permohonan->foto_rumah)) {
                 Storage::delete($permohonan->foto_rumah);
             }
         }
-        if($permohonan->surat_kuasa){
+        if ($permohonan->surat_kuasa) {
             if (Storage::exists($permohonan->surat_kuasa)) {
                 Storage::delete($permohonan->surat_kuasa);
             }
         }
-        if($permohonan->surat_kehilangan){
+        if ($permohonan->surat_kehilangan) {
             if (Storage::exists($permohonan->surat_kehilangan)) {
                 Storage::delete($permohonan->surat_kehilangan);
             }

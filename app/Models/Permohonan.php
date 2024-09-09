@@ -11,7 +11,7 @@ class Permohonan extends Model
     use HasFactory;
     protected $table = 'permohonan';
     protected $fillable = [
-        'user_id', 'no_imb', 'nama_pemohon', 'telp_pemohon', 'alamat_pemohon', 'nama_imb', 'alamat_imb', 'tahun', 'tujuan', 'sk_imb', 'sertifikat', 'ktp', 'foto_rumah', 'surat_kuasa', 'surat_kehilangan', 'status',
+        'user_id', 'no_imb', 'nama_pemohon', 'telp_pemohon', 'alamat_pemohon', 'nama_imb', 'alamat_imb', 'tahun', 'tujuan', 'sk_imb', 'sertifikat', 'ktp', 'foto_rumah', 'surat_kuasa', 'surat_kehilangan', 'status', 'nomor_sertifikat', 'status_tanah'
     ];
 
     public function user() : BelongsTo {
